@@ -27,16 +27,65 @@
     .header h1 { font-size: 2.5em; color: #333; }
     .header h1 span { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .current-date { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 12px; margin-bottom: 30px; font-size: 1.3em; font-weight: 600; }
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 20px; }
-    .card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 2px solid transparent; transition: transform 0.3s ease; }
+    .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+    .card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+}
+ rgba(0, 0, 0, 0.1); border: 2px solid transparent; transition: transform 0.3s ease; }
     .card:hover { transform: translateY(-5px); }
     .card-title { font-size: 1.1em; font-weight: 600; color: #667eea; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
     .card-content { display: flex; flex-direction: column; gap: 12px; }
     .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
     .info-label { color: #666; font-weight: 500; }
     .info-value { color: #333; font-weight: 600; }
-    .info-value.phone { color: #667eea; font-size: 1.2em; font-weight: 700; background: #f0f3ff; padding: 5px 12px; border-radius: 8px; border: 2px solid #667eea; font-family: 'Courier New', monospace; }
-    .info-value.functional { color: #764ba2; font-size: 1.2em; font-weight: 700; background: #f8f0ff; padding: 5px 12px; border-radius: 8px; border: 2px solid #764ba2; font-family: 'Courier New', monospace; }
+    .info-value.phone{
+
+color:#667eea;
+font-size:1.45em;
+font-weight:800;
+background:#f0f3ff;
+padding:8px 15px;
+border-radius:10px;
+border:2px solid #667eea;
+font-family:'Courier New', monospace;
+letter-spacing:1px;
+
+}
+    .info-value.functional{
+
+display:block;
+
+width:100%;
+
+text-align:center;
+
+font-size:2em;
+
+font-weight:900;
+
+color:white;
+
+background:#764ba2;
+
+padding:14px;
+
+border-radius:12px;
+
+border:none;
+
+box-shadow:0 4px 12px rgba(118,75,162,.35);
+
+font-family:'Courier New', monospace;
+
+letter-spacing:2px;
+
+}
     .highlight-card { border-color: #667eea; background: #f8f9ff; }
     .badge-today { background: #667eea; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; margin-left: 10px; text-transform: uppercase; }
     .error-message { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 12px; border: 1px solid #f5c6cb; margin: 20px 0; text-align: center; }
@@ -44,12 +93,63 @@
     .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #f0f0f0; color: #999; font-size: 0.9em; }
     .refresh-btn { display: inline-block; margin-top: 15px; padding: 10px 25px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.3s ease; }
     .refresh-btn:hover { background: #5a6fd6; }
-    @media (max-width: 768px) {
-      .container { padding: 15px; }
-      .header h1 { font-size: 2em; }
-      .cards-grid { grid-template-columns: 1fr; }
-      .info-row { flex-direction: column; align-items: flex-start; gap: 5px; }
-    }
+    @media (max-width:768px){
+
+.container{
+    padding:10px;
+}
+
+.header{
+    margin-bottom:15px;
+}
+
+.header h1{
+    font-size:1.6em;
+}
+
+.current-date{
+    font-size:1em;
+    padding:10px;
+    margin-bottom:15px;
+}
+
+.cards-grid{
+    grid-template-columns:1fr;
+    gap:12px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 8px 25px rgba(0,0,0,.1);
+    border:2px solid transparent;
+    transition:transform .3s ease;
+}
+
+.card-title{
+
+font-size:1.05em;
+
+font-weight:700;
+
+text-align:center;
+
+padding-bottom:8px;
+
+margin-bottom:12px;
+
+color:#4d5bd3;
+
+}
+
+.info-row{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:4px;
+}
+
+}
   </style>
 </head>
 <body>
@@ -136,10 +236,9 @@
       let html = `<div class="cards-grid">`;
 
       // Card 1: Plantonista do Dia
-      html += `
-        <div class="card highlight-card">
-          <div class="card-title">📋 Plantonista do Dia <span class="badge-today">HOJE</span></div>
-          <div class="card highlight-card">
+html += `
+<div class="card highlight-card">
+
     <div class="card-title">
         📋 Plantonista do Dia
         <span class="badge-today">HOJE</span>
@@ -160,8 +259,9 @@
         ` : ''}
 
     </div>
+
 </div>
-      `;
+`;
 
       // Card 2: Telefone Funcional
       html += `
@@ -172,7 +272,15 @@
               <span class="info-label">📱 Número</span>
               <span class="info-value functional">${hasFuncional ? entry.funcional : 'Não disponível'}</span>
             </div>
-            <div style="margin-top: 10px; padding: 10px; background: #f0f3ff; border-radius: 8px; text-align: center; font-size: 0.9em; color: #666;">
+            <div style="
+margin-top:8px;
+padding:8px;
+background:#f7f7f7;
+border-radius:8px;
+text-align:center;
+font-size:0.85em;
+color:#555;
+">
               <strong>Plantão:</strong> ${entry.plantonista || 'Não informado'}
             </div>
           </div>
