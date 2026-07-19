@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOBREAVISO PC</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #667eea; padding-bottom: 20px; }
+    .header h1 { font-size: 2.5em; color: #333; }
+    .header h1 span { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .current-date { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 12px; margin-bottom: 30px; font-size: 1.3em; font-weight: 600; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 20px; }
+    .card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border: 2px solid transparent; transition: transform 0.3s ease; }
+    .card:hover { transform: translateY(-5px); }
+    .card-title { font-size: 1.1em; font-weight: 600; color: #667eea; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    .card-content { display: flex; flex-direction: column; gap: 12px; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+    .info-label { color: #666; font-weight: 500; }
+    .info-value { color: #333; font-weight: 600; }
+    .info-value.phone { color: #667eea; font-size: 1.2em; font-weight: 700; background: #f0f3ff; padding: 5px 12px; border-radius: 8px; border: 2px solid #667eea; font-family: 'Courier New', monospace; }
+    .info-value.functional { color: #764ba2; font-size: 1.2em; font-weight: 700; background: #f8f0ff; padding: 5px 12px; border-radius: 8px; border: 2px solid #764ba2; font-family: 'Courier New', monospace; }
+    .highlight-card { border-color: #667eea; background: #f8f9ff; }
+    .badge-today { background: #667eea; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; margin-left: 10px; text-transform: uppercase; }
+    .error-message { background: #f8d7da; color: #721c24; padding: 20px; border-radius: 12px; border: 1px solid #f5c6cb; margin: 20px 0; text-align: center; }
+    .loading { text-align: center; padding: 40px; color: #666; font-size: 1.1em; }
+    .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #f0f0f0; color: #999; font-size: 0.9em; }
+    .refresh-btn { display: inline-block; margin-top: 15px; padding: 10px 25px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 1em; font-weight: 600; cursor: pointer; transition: background 0.3s ease; }
+    .refresh-btn:hover { background: #5a6fd6; }
+    @media (max-width: 768px) {
+      .container { padding: 15px; }
+      .header h1 { font-size: 2em; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .info-row { flex-direction: column; align-items: flex-start; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>🚨 <span>SOBREAVISO PC</span></h1></div>
+    <div id="currentDate" class="current-date">Carregando...</div>
+    <div id="content"><div class="loading">Carregando informações...</div></div>
+    <div style="text-align: center; margin-top: 15px;">
+      <button class="refresh-btn" onclick="carregarDados()">🔄 Atualizar Dados</button>
+    </div>
+    <div class="footer">
+      <p>Sistema de Sobreaviso PC - Dados em tempo real</p>
+      <small style="color: #bbb;">Atualizado: <span id="updateTime">-</span></small>
+    </div>
+  </div>
+
+  <script>
+    // URL CORRETA da sua implantação
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyufLJRCRqm83jH0l3D3uJFnLLT-EdVH75hcsIHyX8Ugx4iU-bwwqPclV_m-czn-DEWVA/exec';
+
+    function carregarDados() {
+      const contentDiv = document.getElementById('content');
+      contentDiv.innerHTML = '<div class="loading">Carregando informações...</div>';
+      
+      const url = `${API_URL}?action=getData&t=${Date.now()}`;
+      
+      console.log('🔗 Buscando dados de:', url);
+      
+      fetch(url)
+        .then(response => {
+          console.log('📡 Status:', response.status);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('📊 Dados recebidos:', data);
+          if (data.success) {
+            exibirDados(data);
+            document.getElementById('updateTime').textContent = new Date().toLocaleTimeString();
+          } else {
+            contentDiv.innerHTML = `
+              <div class="error-message">
+                <strong>⚠️ Erro:</strong> ${data.error || 'Dados não encontrados'}<br>
+                <small>Tente novamente em alguns instantes.</small>
+                ${data.availableSheets ? `<br><small>Abas disponíveis: ${data.availableSheets.join(', ')}</small>` : ''}
+              </div>
+            `;
+          }
+        })
+        .catch(error => {
+          console.error('❌ Erro:', error);
+          contentDiv.innerHTML = `
+            <div class="error-message">
+              <strong>⚠️ Erro de conexão:</strong><br>
+              ${error.message}<br>
+              <small>Verifique se a URL do Apps Script está correta.</small>
+              <br><br>
+              <strong>URL configurada:</strong><br>
+              <code style="font-size: 12px; word-break: break-all;">${API_URL}</code>
+            </div>
+          `;
+        });
+    }
+
+    function exibirDados(data) {
+      const contentDiv = document.getElementById('content');
+      const entry = data.entradaHoje;
+      
+      document.getElementById('currentDate').textContent = data.dataExtenso || 'Data indisponível';
+
+      if (!entry) {
+        contentDiv.innerHTML = `
+          <div class="error-message">
+            <strong>ℹ️ Nenhum plantão encontrado para hoje (${data.hoje || 'data não disponível'}).</strong>
+          </div>
+        `;
+        return;
+      }
+
+      const hasFuncional = entry.funcional && entry.funcional.trim() !== '';
+
+      let html = `<div class="cards-grid">`;
+
+      // Card 1: Plantonista do Dia
+      html += `
+        <div class="card highlight-card">
+          <div class="card-title">📋 Plantonista do Dia <span class="badge-today">HOJE</span></div>
+          <div class="card highlight-card">
+    <div class="card-title">
+        📋 Plantonista do Dia
+        <span class="badge-today">HOJE</span>
+    </div>
+
+    <div class="card-content">
+
+        <div class="info-row">
+            <span class="info-label">👤 Nome</span>
+            <span class="info-value">${entry.plantonista || 'Não informado'}</span>
+        </div>
+
+        ${entry.telefone ? `
+        <div class="info-row">
+            <span class="info-label">📱 Telefone</span>
+            <span class="info-value phone">${entry.telefone}</span>
+        </div>
+        ` : ''}
+
+    </div>
+</div>
+      `;
+
+      // Card 2: Telefone Funcional
+      html += `
+        <div class="card">
+          <div class="card-title">📞 Telefone Funcional</div>
+          <div class="card-content">
+            <div class="info-row">
+              <span class="info-label">📱 Número</span>
+              <span class="info-value functional">${hasFuncional ? entry.funcional : 'Não disponível'}</span>
+            </div>
+            <div style="margin-top: 10px; padding: 10px; background: #f0f3ff; border-radius: 8px; text-align: center; font-size: 0.9em; color: #666;">
+              <strong>Plantão:</strong> ${entry.plantonista || 'Não informado'}
+            </div>
+          </div>
+        </div>
+      `;
+
+      html += `</div>`;
+      contentDiv.innerHTML = html;
+    }
+
+    window.onload = function() {
+      carregarDados();
+      setInterval(carregarDados, 300000);
+    };
+  </script>
+</body>
+</html>
