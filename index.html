@@ -262,7 +262,7 @@ color:#4d5bd3;
     function exibirDados(data) {
       const contentDiv = document.getElementById('content');
       const entry = data.entradaHoje;
-      
+      const pericia = data.peritoHoje;
       document.getElementById('currentDate').textContent = data.dataExtenso || 'Data indisponível';
 
       if (!entry) {
@@ -329,7 +329,48 @@ html += `
 
 </div>
 `;
-      html += `</div>`;
+   html += `
+
+<div class="card">
+
+<div class="card-title">
+
+🔬 PERITO DO DIA
+
+</div>
+
+<div class="card-content">
+
+<div class="info-row">
+
+<span class="info-value">
+
+${pericia ? pericia.perito : 'Não informado'}
+
+</span>
+
+</div>
+
+${pericia && pericia.telefone ? `
+
+<div class="info-row">
+
+<span class="info-value phone">
+
+${pericia.telefone}
+
+</span>
+
+</div>
+
+` : ''}
+
+</div>
+
+</div>
+
+`;
+   html += `</div>`;
       contentDiv.innerHTML = html;
     }
 
