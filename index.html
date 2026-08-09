@@ -274,7 +274,7 @@ color:#4d5bd3;
         return;
       }
 
-      const hasFuncional = entry.funcional && entry.funcional.trim() !== '';
+      const hasFuncional = entry.funcional != null && String(entry.funcional).trim() !== '';
 
       let html = `<div class="cards-grid">`;
 
