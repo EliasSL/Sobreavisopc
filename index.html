@@ -193,6 +193,39 @@ color:#4d5bd3;
 }
 
 }
+.chefe-sevic-card {
+  padding: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.chefe-sevic-card .card-title {
+  font-size: 0.95em;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+}
+
+.chefe-sevic-content {
+  gap: 6px;
+}
+
+.chefe-sevic-nome {
+  font-size: 1.1em;
+  font-weight: 800;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.chefe-sevic-telefone {
+  font-size: 1.25em;
+  font-weight: 800;
+  color: #667eea;
+  background: #eef3ff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #667eea;
+  font-family: 'Courier New', monospace;
+}
   </style>
 </head>
 <body>
@@ -260,10 +293,13 @@ color:#4d5bd3;
     }
 
     function exibirDados(data) {
-      const contentDiv = document.getElementById('content');
-      const entry = data.entradaHoje;
-      const pericia = data.peritoHoje;
-      document.getElementById('currentDate').textContent = data.dataExtenso || 'Data indisponível';
+  const contentDiv = document.getElementById('content');
+  const entry = data.entradaHoje;
+  const pericia = data.peritoHoje;
+  const chefeSevic = data.chefeSevic;
+
+  document.getElementById('currentDate').textContent =
+    data.dataExtenso || 'Data indisponível';
 
       if (!entry) {
         contentDiv.innerHTML = `
@@ -370,7 +406,32 @@ ${pericia.telefone}
 </div>
 
 `;
-   html += `</div>`;
+  html += `
+<div class="card chefe-sevic-card">
+
+  <div class="card-title">
+    👮 CHEFE DO SEVIC
+  </div>
+
+  <div class="card-content chefe-sevic-content">
+
+    <div class="chefe-sevic-nome">
+      ${chefeSevic && chefeSevic.nome
+        ? chefeSevic.nome
+        : 'Não informado'}
+    </div>
+
+    <div class="chefe-sevic-telefone">
+      ☎️ ${chefeSevic && chefeSevic.telefone
+        ? chefeSevic.telefone
+        : 'Não informado'}
+    </div>
+
+  </div>
+
+</div>
+`;
+ html += `</div>`;
       contentDiv.innerHTML = html;
     }
 
