@@ -35,20 +35,27 @@
     .card{
     background:white;
     border-radius:14px;
-    padding:16px;
+    padding:8px 12px;
     box-shadow:0 8px 25px rgba(0,0,0,.1);
     border:2px solid transparent;
     transition:transform .3s ease;
 }
     .card:hover { transform: translateY(-5px); }
-    .card-title { font-size: 1.1em; font-weight: 600; color: #667eea; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0; }
+    .card-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #f0f0f0;
+}
     .card-content{
 
 display:flex;
 
 flex-direction:column;
 
-gap:14px;
+gap:8px;
 
 align-items:center;
 
@@ -164,28 +171,20 @@ transform:scale(1);
 .card{
     background:white;
     border-radius:14px;
-    padding:16px;
+    padding:8px 12px;
     box-shadow:0 8px 25px rgba(0,0,0,.1);
     border:2px solid transparent;
     transition:transform .3s ease;
 }
 
 .card-title{
-
-font-size:1.05em;
-
-font-weight:700;
-
-text-align:center;
-
-padding-bottom:8px;
-
-margin-bottom:12px;
-
-color:#4d5bd3;
-
+    font-size:1.05em;
+    font-weight:700;
+    text-align:center;
+    padding-bottom:5px;
+    margin-bottom:6px;
+    color:#4d5bd3;
 }
-
 .info-row{
     flex-direction:column;
     align-items:flex-start;
@@ -327,16 +326,16 @@ color:#4d5bd3;
     </span>
 </div>
             <div style="
-margin-top:8px;
-padding:8px;
+margin-top:4px;
+padding:5px;
 background:#f7f7f7;
 border-radius:8px;
 text-align:center;
-font-size:2em;
+font-size:1.3em;
 color:#555;
 ">
-              <strong>Plantão:</strong> ${entry.plantonista || 'Não informado'}
-            </div>
+<strong>Plantão:</strong> ${entry.plantonista || 'Não informado'}
+</div>
           </div>
         </div>
       `;
